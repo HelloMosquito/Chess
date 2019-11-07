@@ -1,24 +1,75 @@
 package textchess;
 
-import java.util.Scanner;
+import java.util.List;
 
 public class Knight {
 	private int color;
 	private char piece;
-	private static int sequenceNumber=0;
+	private char enemy;
+
+	private static int totalKnightsNumber = 0;
+	private int sequenceNumber;
+	private int row;
+	private int column;
+	private List<Board.KnightCoordinate> allValidDestinations;
+	private List<Board.KnightCoordinate> allValidDestinationsOccupiedByEnemy;
+	private Board.KnightCoordinate currentCoordinate;
+
 
 	public Knight(int color) {
 		this.color = color;
-		this.piece = getPiece();
-		sequenceNumber++;
+        this.setPiece();
+		this.setEnemy();
+		this.sequenceNumber = totalKnightsNumber;
+		totalKnightsNumber++;
+	}
+
+	public void setCurrentCoordinate(){
+		this.currentCoordinate = new Board.KnightCoordinate(this.row, this.column);
+	}
+
+	public Board.KnightCoordinate getCurrentCoordinate(){
+		return this.currentCoordinate;
+	}
+
+	public void setAllValidDestinations(List<Board.KnightCoordinate> allValidDestinations){
+		this.allValidDestinations = allValidDestinations;
+	}
+
+	public List<Board.KnightCoordinate> getAllValidDestinations(){
+		return this.allValidDestinations;
+	}
+
+	public List<Board.KnightCoordinate> getAllValidDestinationsOccupiedByEnemy() {
+		return allValidDestinationsOccupiedByEnemy;
+	}
+
+	public void setAllValidDestinationsOccupiedByEnemy(List<Board.KnightCoordinate> allValidDestinationsOccupiedByEnemy) {
+		this.allValidDestinationsOccupiedByEnemy = allValidDestinationsOccupiedByEnemy;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
 	}
 
 	public int getSequenceNumber(){
 	    // use this sequence number to identify each Knight and mapping to its coordinate
-		return sequenceNumber;
+		return this.sequenceNumber;
 	}
 
-	public char getPiece(){
+	public void setPiece(){
 		// Make sure there are only WHITE(1) and BLACK(0)
 //	    while(this.color!=0 && this.color!=1){
 //			Scanner newColor = new Scanner(System.in);
@@ -26,10 +77,22 @@ public class Knight {
 //			this.setColor(newColor.next());
 //		}
 	    if(this.color == 1){
-	    	return 'N';
+	    	this.piece = 'N';
 		} else {
-	    	return 'n';
+	    	this.piece = 'n';
 		}
+	}
+
+	public char getPiece(){
+		return this.piece;
+	}
+
+	private void setEnemy(){
+		this.enemy = this.getPiece()=='N'?'n':'N';
+	}
+
+	public char getEnemy(){
+		return this.enemy;
 	}
 
 	private void setColor(String color){
